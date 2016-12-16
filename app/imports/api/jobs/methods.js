@@ -1,5 +1,5 @@
 /**
- * @module /imports/api/jobs/methods
+ * @module api/jobs/methods
  */
 
 /*

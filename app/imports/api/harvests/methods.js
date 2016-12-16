@@ -1,5 +1,5 @@
 /**
- * @module /imports/api/harvests/methods
+ * @module api/harvests/methods
  */
 
 /* Methods are highly app specific and as such Maka doesn't try

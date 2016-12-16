@@ -1,5 +1,5 @@
 /**
- * @module /imports/api/attempts/attempts
+ * @module api/attempts/attempts
  */
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';

@@ -1,5 +1,5 @@
 /**
- * @module /imports/api/harvests/harvests
+ * @module api/harvests/harvests
  */
 import { Mongo } from 'meteor/mongo';
 import { Tabular } from 'meteor/aldeed:tabular';

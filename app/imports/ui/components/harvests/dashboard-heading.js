@@ -1,3 +1,6 @@
+/**
+ * @module ui/components/harvests/dashboard-heading
+ */
 import './dashboard-heading.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
@@ -7,33 +10,9 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { pageState } from '../../pages/harvests/harvests.js';
 
-Template.expandedDashboard.events({
-  'click #errors'(){
-    if(!_.isUndefined(this._id)) {
-      FlowRouter.go('records', {harvestId: this._id}, {"sort": "errors"});
-    }
-  },
-  'click #records'() {
-    if(!_.isUndefined(this._id)) {
-      FlowRouter.go('records', {harvestId: this._id});
-    }
-  },
-  'click button'(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    pageState.set('editMode', true);
-    pageState.set('harvestId', null);
-  }
-});
-
-Template.normalDashboard.events({
-  'click button'(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    pageState.set('editMode', true);
-    pageState.set('harvestId', null);
-  }
-});
+/*****************************************************************************/
+/* dashboardHeading: Helpers */
+/*****************************************************************************/
 
 Template.dashboardHeading.helpers({
   dataSources() {
@@ -50,6 +29,18 @@ Template.dashboardHeading.helpers({
   }
 });
 
+/*****************************************************************************/
+/* dashboardHeading: Lifecycle Hooks */
+/*****************************************************************************/
+
+/**
+ * Creates a template state ReactiveDict and initializes harvests.count and
+ * harvests.total_datasets both to null. It also calls harvests.count which
+ * will asynchronously set the harvests.count key to the return value.
+ *
+ * @function dashboardHeading.onCreated
+ * @name dashboardHeading.onCreated
+ */
 Template.dashboardHeading.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.set('harvests.count', null);
@@ -63,10 +54,63 @@ Template.dashboardHeading.onCreated(function() {
   });
 });
 
+/*****************************************************************************/
+/* expandedDashboard: Event Handlers */
+/*****************************************************************************/
+
+Template.expandedDashboard.events({
+  /**
+   * Redirects the page to the records page with a query parameter to sort by errors.
+   */
+  'click #errors'(){
+    if(!_.isUndefined(this._id)) {
+      FlowRouter.go('records', {harvestId: this._id}, {"sort": "errors"});
+    }
+  },
+  /**
+   * Redirects the page to the records page.
+   */
+  'click #records'() {
+    if(!_.isUndefined(this._id)) {
+      FlowRouter.go('records', {harvestId: this._id});
+    }
+  },
+  /**
+   * Sets the pageState key editMode to true which causes the page to table to
+   * resize and a second column to emerge which contains the pie chart.
+   */
+  'click button'(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    pageState.set('editMode', true);
+    pageState.set('harvestId', null);
+  }
+});
+
+/*****************************************************************************/
+/* expandedDashboard: Lifecycle Hooks */
+/*****************************************************************************/
 
 Template.expandedDashboard.onRendered(function() {
   this.$('.showtip').tooltip();
 });
+
+/*****************************************************************************/
+/* normalDashboard: Event Handlers */
+/*****************************************************************************/
+
+Template.normalDashboard.events({
+  'click button'(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    pageState.set('editMode', true);
+    pageState.set('harvestId', null);
+  }
+});
+
+/*****************************************************************************/
+/* normalDashboard: Helpers */
+/*****************************************************************************/
 
 Template.normalDashboard.helpers({
   totalDatasets() {
@@ -75,9 +119,9 @@ Template.normalDashboard.helpers({
   }
 });
 
-Template.normalDashboard.onRendered(function() {
-  this.$('.showtip').tooltip();
-});
+/*****************************************************************************/
+/* normalDashboard: Lifecycle Hooks */
+/*****************************************************************************/
 
 Template.normalDashboard.onCreated(function() {
   this.state = new ReactiveDict();
@@ -90,4 +134,9 @@ Template.normalDashboard.onCreated(function() {
     }
   });
 });
+
+Template.normalDashboard.onRendered(function() {
+  this.$('.showtip').tooltip();
+});
+
 

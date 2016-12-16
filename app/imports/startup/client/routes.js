@@ -1,5 +1,5 @@
 /**
- * @module /imports/api/startup/client/routes
+ * @module startup/client/routes
  */
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
